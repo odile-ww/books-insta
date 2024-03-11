@@ -1,0 +1,9 @@
+{
+  "hosting": [
+    {
+      "target": "books-insta",
+      "source": ".",
+      "frameworksBackend": {}
+    }
+  ]
+}

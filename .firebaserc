@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "quotes-api-angular": {
+      "hosting": {
+        "books-insta": [
+          "quotes-api-angular"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "quotes-api-angular"
+  }
+}

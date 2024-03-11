@@ -88,6 +88,23 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "version": 2
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "books-insta:build:production",
+              "serveTarget": "books-insta:serve:production"
+            },
+            "development": {
+              "buildTarget": "books-insta:build:development",
+              "serveTarget": "books-insta:serve:development"
+            }
+          },
+          "defaultConfiguration": "production"
         }
       }
     }
