@@ -12,18 +12,13 @@ import { AuthService } from './services/auth.service';
 })
 export class AppComponent implements OnInit {
   authService = inject(AuthService);
+  currentUser: string;
 
   ngOnInit(): void {
-    this.authService.user$.subscribe((user) => {
-      if (user) {
-        this.authService.currentUserSignal.set({
-          email: user.email!,
-          username: user.displayName!,
-        });
-      } else {
-        this.authService.currentUserSignal.set(null);
-      }
-    });
+    this.authService.getCurrentUser();
+    this.authService.userObservable.subscribe(
+      (user) => (this.currentUser = user)
+    );
   }
 
   logout() {

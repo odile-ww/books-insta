@@ -9,16 +9,22 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from '@angular/fire/auth';
-import { Observable, from } from 'rxjs';
-import { User } from '../interfaces/User.interface';
+import { BehaviorSubject, Observable, from } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  firebaseAuth = inject(Auth);
-  user$ = user(this.firebaseAuth);
-  currentUserSignal = signal<User | null>(null);
+  private firebaseAuth = inject(Auth);
+  private userSubject$: BehaviorSubject<string> = new BehaviorSubject('');
+  userObservable: Observable<string> = this.userSubject$.asObservable();
+
+  getCurrentUser() {
+    user(this.firebaseAuth).subscribe((user) => {
+      const displayName = user?.displayName || '';
+      this.userSubject$.next(displayName);
+    });
+  }
 
   signup(email: string, username: string, password: string): Observable<void> {
     //Firebase returns promises

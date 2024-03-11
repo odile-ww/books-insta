@@ -25,13 +25,13 @@
         >
       </li>
     </ul>
-    <ul *ngIf="authService.currentUserSignal(); else authenticate">
+    <ul *ngIf="currentUser; else authenticate">
       <li>
         <a
           routerLink="/user-space"
           routerLinkActive="active"
           ariaCurrentWhenActive="page"
-          >{{ authService.currentUserSignal()?.username }}'s Quotes</a
+          >{{ currentUser }}'s Quotes</a
         >
       </li>
       <li>

@@ -5,6 +5,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
+//TO DO: example to make login/signup a single page: https://github.com/code1ogic/Angular-Firebase-crud/blob/main/src/app/component/login/login.component.ts
 @Component({
   selector: 'app-signup',
   standalone: true,
