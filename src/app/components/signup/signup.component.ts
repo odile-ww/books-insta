@@ -40,4 +40,17 @@ export class SignupComponent {
         },
       });
   }
+
+  signInWithGoogle() {
+    this.authService.googleSignIn().subscribe({
+      next: () => {
+        //TODO: finish the sign in
+        this.router.navigateByUrl('/quotes');
+      },
+
+      error: (err) => {
+        this.errorMessage = err.code;
+      },
+    });
+  }
 }

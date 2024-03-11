@@ -6,6 +6,8 @@ import {
   signOut,
   updateProfile,
   user,
+  GoogleAuthProvider,
+  signInWithPopup,
 } from '@angular/fire/auth';
 import { Observable, from } from 'rxjs';
 import { User } from '../interfaces/User.interface';
@@ -41,6 +43,14 @@ export class AuthService {
 
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
+    return from(promise);
+  }
+
+  googleSignIn() {
+    const promise = signInWithPopup(
+      this.firebaseAuth,
+      new GoogleAuthProvider()
+    );
     return from(promise);
   }
 }
