@@ -1,15 +1,24 @@
 <main class="container">
   <h1>All Quotes</h1>
-  <section><header>Here we will add search functionality</header></section>
+  <section>
+    <div class="grid">
+      <button (click)="sortQuotes('title')" class="secondary">
+        Sort by Book
+      </button>
+      <button (click)="sortQuotes('author')" class="secondary">
+        Sort by Author
+      </button>
+    </div>
+  </section>
   <section class="grid">
     <blockquote *ngFor="let quote of quotes">
       <article>
         <header>TBD</header>
         <p>{{ quote.content }}</p>
-        <footer
-          class="card-footer blockquote-footer text-right"
-          [ngClass]="quote.isFeatured ? 'text-white' : 'text-primary'"
-        >
+        <div class="grid">
+          <kbd *ngFor="let tag of quote.tags">{{ tag }}</kbd>
+        </div>
+        <footer [ngClass]="quote.isFeatured ? 'text-white' : 'text-primary'">
           <span class="clickable">{{ quote.author }}</span
           >,
           <cite

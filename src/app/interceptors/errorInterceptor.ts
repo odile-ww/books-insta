@@ -18,7 +18,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('error occurred:', error);
+        if (error) console.error('error occurred:', error);
         return throwError(() => error);
       })
     );
