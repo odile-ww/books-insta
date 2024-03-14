@@ -10,22 +10,18 @@
       </button>
     </div>
   </section>
-  <section class="grid">
+  <section class="quotes-wrapper">
     <blockquote *ngFor="let quote of quotes">
       <article>
-        <header>TBD</header>
         <p>{{ quote.content }}</p>
-        <div class="grid">
+        <div class="tabs-container">
           <kbd *ngFor="let tag of quote.tags">{{ tag }}</kbd>
         </div>
-        <footer [ngClass]="quote.isFeatured ? 'text-white' : 'text-primary'">
-          <span class="clickable">{{ quote.author }}</span
+        <footer>
+          <span
+            ><strong>{{ quote.author }}</strong></span
           >,
-          <cite
-            class="clickable"
-            [ngClass]="{ 'text-white': quote.isFeatured === true }"
-            >{{ quote.title }}</cite
-          >
+          <cite>{{ quote.title }}</cite>
         </footer>
       </article>
     </blockquote>
