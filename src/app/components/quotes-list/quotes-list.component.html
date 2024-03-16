@@ -1,13 +1,39 @@
 <main class="container">
   <h1>All Quotes</h1>
   <section>
+    <p *ngIf="filteredBy">
+      Quotes have been filtered by keyword: <strong>{{ filteredBy }}</strong>
+    </p>
+    <p *ngIf="sortedBy">
+      Quotes have been sortedBy: <strong>{{ sortedBy }}</strong>
+    </p>
     <div class="grid">
-      <button (click)="sortQuotes('title')" class="secondary">
-        Sort by Book
-      </button>
-      <button (click)="sortQuotes('author')" class="secondary">
-        Sort by Author
-      </button>
+      <form
+        role="search"
+        #searchForm="ngForm"
+        (ngSubmit)="onSubmit(searchForm)"
+        novalidate
+      >
+        <input
+          #search="ngModel"
+          name="search"
+          type="search"
+          ngModel
+          placeholder="Search"
+          (input)="clear()"
+          required
+        />
+        <input type="submit" />
+      </form>
+      <div class="butons-wrapper">
+        <button (click)="sortQuotes('title')" class="secondary">
+          Sort by Book
+        </button>
+        <button (click)="sortQuotes('author')" class="secondary">
+          Sort by Author
+        </button>
+        <button (click)="clear()" class="contrast">Clear Filters</button>
+      </div>
     </div>
   </section>
   <section class="quotes-wrapper">
@@ -15,7 +41,11 @@
       <article>
         <p>{{ quote.content }}</p>
         <div class="tabs-container">
-          <kbd *ngFor="let tag of quote.tags">{{ tag }}</kbd>
+          <kbd
+            *ngFor="let tag of quote.tags"
+            (click)="filterQuotes('keyword', tag)"
+            >{{ tag }}</kbd
+          >
         </div>
         <footer>
           <span

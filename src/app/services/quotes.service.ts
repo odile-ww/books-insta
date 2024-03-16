@@ -5,6 +5,7 @@ import { Quote } from '../interfaces/Quote.interface';
 import {
   SortByAuthorStrategy,
   SortByTitleStrategy,
+  FilterQuotesByKeyword,
 } from './quotesSortingStrategy';
 
 @Injectable({
@@ -14,6 +15,7 @@ export class QuotesService {
   firestore = inject(Firestore);
   sortByTitleStrategy = inject(SortByTitleStrategy);
   sortByAuthorStrategy = inject(SortByAuthorStrategy);
+  filterByKeyword = inject(FilterQuotesByKeyword);
   quotesCollection = collection(this.firestore, 'quotes');
 
   getQuotes(): Observable<Quote[]> {
@@ -22,12 +24,18 @@ export class QuotesService {
     }) as Observable<Quote[]>;
   }
 
-  sort(quotes: Quote[], strategy: 'title' | 'author'): Quote[] {
+  sort(
+    quotes: Quote[],
+    strategy: 'title' | 'author' | 'keyword',
+    keyword = ''
+  ): Quote[] {
     switch (strategy) {
       case 'title':
         return this.sortByTitleStrategy.sort(quotes);
       case 'author':
         return this.sortByAuthorStrategy.sort(quotes);
+      case 'keyword':
+        return this.filterByKeyword.sort(quotes, keyword);
       default:
         return quotes;
     }
