@@ -25,3 +25,13 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Implemented design patterns:
+
+#Strategy --> sorting / filtering.
+
+The blueprint for the sorting/ filtering strategy is the `QuotesSortingInterface`, while the classes in `quotesSortingStrategy.ts` define different sorting / filtering strategies. The `QuotesService` has a method that handles the selection and application of sorting strategies which is then used in the `QuotesListComponent`.
+
+#Mediator --> allow different components to keep track of the user status via a service
+
+Use a `BehaviorSubject` to allow components to access the user status without communicating with eachother
