@@ -42,13 +42,19 @@ export class AuthService {
       this.firebaseAuth,
       email,
       password
-    ).then(() => {});
+    ).then((response) => {
+      console.log(response.user.displayName);
+      if (response.user.displayName) {
+        this.userSubject$.next(response.user.displayName);
+      }
+    });
 
     return from(promise);
   }
 
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
+    this.userSubject$.next('');
     return from(promise);
   }
 

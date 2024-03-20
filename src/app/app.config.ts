@@ -9,14 +9,11 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
 import { getFunctions, provideFunctions } from '@angular/fire/functions';
 import { getStorage, provideStorage } from '@angular/fire/storage';
-import { httpInterceptorProviders } from './interceptors';
 import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(HttpClientModule),
-    httpInterceptorProviders,
     importProvidersFrom(
       provideFirebaseApp(() => initializeApp(environment.firebaseConfig))
     ),

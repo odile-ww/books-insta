@@ -18,8 +18,10 @@ export class QuotesListComponent implements OnInit, OnDestroy {
   filteredBy: string;
   sortedBy: string;
 
-  quotesService = inject(QuotesService);
-  authService = inject(AuthService);
+  constructor(
+    protected quotesService: QuotesService,
+    protected authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.getQuotes();

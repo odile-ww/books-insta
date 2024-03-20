@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
@@ -16,7 +15,6 @@ export class LoginComponent {
   errorMessage: string;
 
   formBuilder = inject(FormBuilder);
-  http = inject(HttpClient);
   router = inject(Router);
   authService = inject(AuthService);
 
@@ -29,7 +27,7 @@ export class LoginComponent {
     const rawForm = this.loginForm.getRawValue();
     this.authService.login(rawForm.email, rawForm.password).subscribe({
       next: () => {
-        this.router.navigateByUrl('/quotes');
+        this.router.navigateByUrl('/user-space');
       },
       // TO DO: handle invalid status of the form
       error: (err) => {
