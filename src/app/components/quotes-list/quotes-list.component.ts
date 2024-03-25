@@ -4,6 +4,7 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { QuotesService } from '../../services/quotes.service';
 import { Quote } from '../../interfaces/Quote.interface';
 import { AuthService } from '../../services/auth.service';
+import { UnsubscribeService } from '../../services/unsubscribe.service';
 
 @Component({
   selector: 'app-quotes-list',
@@ -20,7 +21,8 @@ export class QuotesListComponent implements OnInit, OnDestroy {
 
   constructor(
     protected quotesService: QuotesService,
-    protected authService: AuthService
+    protected authService: AuthService,
+    protected unsubscribeAll: UnsubscribeService
   ) {}
 
   ngOnInit(): void {
@@ -30,19 +32,23 @@ export class QuotesListComponent implements OnInit, OnDestroy {
 
   checkIfUserLoggedIn() {
     //TO DO: use later for individual page
-    this.authService.userObservable.subscribe((user: string) => {
-      if (user) {
-        this.isLoggedIn = true;
+    const userSub = this.authService.userObservable.subscribe(
+      (user: string) => {
+        if (user) {
+          this.isLoggedIn = true;
+        }
       }
-    });
+    );
+    this.unsubscribeAll.addSubscription(userSub);
   }
 
   getQuotes(): void {
-    this.quotesService.getQuotes().subscribe((quotes) => {
+    const quotesSub = this.quotesService.getQuotes().subscribe((quotes) => {
       this.quotes = quotes;
       this.filteredBy = '';
       this.sortedBy = '';
     });
+    this.unsubscribeAll.addSubscription(quotesSub);
   }
 
   sortQuotes(strategy: 'title' | 'author'): void {
@@ -61,11 +67,10 @@ export class QuotesListComponent implements OnInit, OnDestroy {
   }
 
   clear(): void {
-    // TODO: get quotes memoized on first page load instead
     this.getQuotes();
   }
 
   ngOnDestroy(): void {
-    // TODO: unsubscribe from subsciptions
+    this.unsubscribeAll.unsubscribe();
   }
 }

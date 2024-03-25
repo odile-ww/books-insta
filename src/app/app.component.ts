@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Router,
@@ -7,6 +7,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { AuthService } from './services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +16,15 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   currentUser: string;
+  subscription: Subscription;
 
   constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.authService.getCurrentUser();
-    this.authService.userObservable.subscribe(
+    this.subscription = this.authService.userObservable.subscribe(
       (user) => (this.currentUser = user)
     );
   }
@@ -30,5 +32,9 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/quotes');
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

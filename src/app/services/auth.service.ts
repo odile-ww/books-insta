@@ -1,4 +1,4 @@
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
@@ -9,7 +9,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from '@angular/fire/auth';
-import { BehaviorSubject, Observable, from } from 'rxjs';
+import { BehaviorSubject, Observable, from, take } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,10 +20,12 @@ export class AuthService {
   userObservable: Observable<string> = this.userSubject$.asObservable();
 
   getCurrentUser() {
-    user(this.firebaseAuth).subscribe((user) => {
-      const displayName = user?.displayName || '';
-      this.userSubject$.next(displayName);
-    });
+    user(this.firebaseAuth)
+      .pipe(take(1))
+      .subscribe((user) => {
+        const displayName = user?.displayName || '';
+        this.userSubject$.next(displayName);
+      });
   }
 
   signup(email: string, username: string, password: string): Observable<void> {
@@ -43,7 +45,6 @@ export class AuthService {
       email,
       password
     ).then((response) => {
-      console.log(response.user.displayName);
       if (response.user.displayName) {
         this.userSubject$.next(response.user.displayName);
       }
@@ -55,7 +56,7 @@ export class AuthService {
   logout(): Observable<void> {
     const promise = signOut(this.firebaseAuth);
     this.userSubject$.next('');
-    return from(promise);
+    return from(promise).pipe(take(1));
   }
 
   googleSignIn() {

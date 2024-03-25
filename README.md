@@ -12,6 +12,10 @@ The blueprint for the sorting/ filtering strategy is the `QuotesSortingInterface
 
 Use a `BehaviorSubject` in the `AuthService` to allow components to access the user status without communicating with eachother
 
+- ### Observer (unsubscribe from subscriptions)
+
+Create a `UnsubscribeService` which implements an interface that has methods for adding / removing subscriptions. In components, we can call the service to keep track of the subsctiptions & unsubscribe from each of them once the component is destroyed.
+
 ## To run the project locally:
 
 ## Clone & install

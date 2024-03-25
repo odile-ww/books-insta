@@ -28,9 +28,7 @@ class PermissionsService {
     return this.authService.userObservable.pipe(
       takeUntilDestroyed(),
       map((user) => {
-        console.log('entered guard');
         if (user) {
-          console.log(user);
           return true;
         } else {
           return this.router.createUrlTree(['app-not-found']);
