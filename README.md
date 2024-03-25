@@ -8,9 +8,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 The blueprint for the sorting/ filtering strategy is the `QuotesSortingInterface`, while the classes in `quotesSortingStrategy.ts` define different sorting / filtering strategies. The `QuotesService` has a method that handles the selection and application of sorting strategies which is then used in the `QuotesListComponent`.
 
-- ### Mediator (used to allow different components to keep track of the user status via a service)
+- ### Mediator (allow different components to keep track of the user status via a service)
 
-Use a `BehaviorSubject` in the `AuthService` to allow components to access the user status without communicating with eachother
+Use a `BehaviorSubject` in the `AuthService` to allow components to access the user status without communicating with eachother.
+
+- ### Chain of Responsibility (pass requests along a chain of handlers)
+
+Add a guard for the `user-space` route, as a handler in the chain for page navigation.
 
 - ### Observer (unsubscribe from subscriptions)
 
