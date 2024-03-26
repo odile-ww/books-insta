@@ -20,6 +20,10 @@ Add a guard for the `user-space` route, as a handler in the chain for page navig
 
 Create a `UnsubscribeService` which implements an interface that has methods for adding / removing subscriptions. In components, we can call the service to keep track of the subsctiptions & unsubscribe from each of them once the component is destroyed.
 
+- ### State (create app themes states and toggle them)
+
+Create interface, abstract class & concrete classes to store the theme state and be able to change it (`themeState.ts`). Use the respective interface & state in the `ThemeService` for exposing concrete methods to be used in the `app.component.ts`.
+
 ## To run the project locally:
 
 ## Clone & install

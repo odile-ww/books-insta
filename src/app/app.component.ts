@@ -8,6 +8,7 @@ import {
 } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { Subscription } from 'rxjs';
+import { ThemeService } from './state/themeState.service';
 
 @Component({
   selector: 'app-root',
@@ -19,10 +20,17 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
   currentUser: string;
   subscription: Subscription;
+  theme: string;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit(): void {
+    this.theme = this.themeService.getStatus();
+    console.log(this.theme);
     this.authService.getCurrentUser();
     this.subscription = this.authService.userObservable.subscribe(
       (user) => (this.currentUser = user)
@@ -32,6 +40,12 @@ export class AppComponent implements OnInit, OnDestroy {
   logout() {
     this.authService.logout();
     this.router.navigateByUrl('/quotes');
+  }
+
+  toggleTheme() {
+    this.themeService.toggleTheme();
+    this.theme = this.themeService.getStatus();
+    console.log(this.theme);
   }
 
   ngOnDestroy() {
