@@ -1,5 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
-import { ThemeState, ThemeContext, DarkThemeState } from './themeState';
+import { Injectable } from '@angular/core';
+import { ThemeState, ThemeContext, LightThemeState } from './themeState';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +9,7 @@ export class ThemeService extends ThemeState {
 
   constructor() {
     super();
-    this.state = new DarkThemeState();
+    this.state = new LightThemeState();
   }
 
   public override getStatus(): string {

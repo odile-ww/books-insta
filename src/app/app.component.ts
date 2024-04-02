@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Router,
@@ -25,7 +25,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private renderer: Renderer2
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +44,11 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   toggleTheme() {
+    this.renderer.removeClass(document.body, 'dark-theme');
+    this.renderer.removeClass(document.body, 'light-theme');
     this.themeService.toggleTheme();
     this.theme = this.themeService.getStatus();
-    console.log(this.theme);
+    this.renderer.addClass(document.body, `${this.theme}-theme`);
   }
 
   ngOnDestroy() {
